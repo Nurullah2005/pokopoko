@@ -1,0 +1,36 @@
+name: BD Job Agent
+
+on:
+  schedule:
+    - cron: '0 3,11 * * *'   # UTC ৩টা = BD সকাল ৯টা, UTC ১১টা = BD বিকাল ৫টা
+  workflow_dispatch:         # ম্যানুয়ালিও চালাতে পারবে
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install packages
+        run: pip install requests
+
+      - name: Run Job Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: python agent.py
+
+      - name: Save database
+        run: |
+          git config user.name "job-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add jobs.db || true
+          git commit -m "update seen jobs $(date)" || true
+          git push || true
