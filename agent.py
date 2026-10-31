@@ -6,10 +6,10 @@ from datetime import datetime
 
 # ===== তোমার প্রোফাইল (নিজের মতো বদলাও) =====
 MY_PROFILE = """
-আমার স্কিল: MS Office, Excel, Data Entry, English, Computer Operation
-লোকেশন: Dhaka
+আমার স্কিল: MS Office, Excel, Data Entry, English,communication,trainer
+লোকেশন: dhaka,magura,khulna
 অভিজ্ঞতা: Fresher
-পছন্দের জব: Data Entry, Office Assistant, Computer Operator, Admin, Govt job, IT related
+পছন্দের জব: Admin, Govt job,manager,all govt job
 """
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
